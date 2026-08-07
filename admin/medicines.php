@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         if ($action === 'add') {
             $stmt = $pdo->prepare('INSERT INTO medicines (name, category_id, price, description, availability, status, image) VALUES (?, ?, ?, ?, ?, ?, ?)');
-            $stmt->execute([$name, $category_id, $price, $description, $availability, $status, $uploadFile ?? 'default.jpg']);
+            $stmt->execute([$name, $category_id, $price, $description, $availability, $status, $uploadFile ?? 'default-placeholder.svg']);
             $message = 'Medicine added successfully.';
         } elseif ($action === 'edit' && $id) {
             if ($uploadFile) {

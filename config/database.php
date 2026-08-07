@@ -36,6 +36,37 @@ function sanitize_input($data): string {
     return htmlspecialchars(trim($data), ENT_QUOTES, 'UTF-8');
 }
 
+function get_medicine_image_path($imageName): string {
+    $imageName = trim((string)$imageName);
+    $defaultImage = 'default-placeholder.svg';
+    $candidate = $imageName !== '' ? $imageName : $defaultImage;
+    $relativeCandidate = ltrim($candidate, '/');
+    $candidatePath = __DIR__ . '/../' . $relativeCandidate;
+
+    $localPaths = [
+        'images/medicines/' . basename($relativeCandidate),
+        'uploads/medicines/' . basename($relativeCandidate),
+        'uploads/medicines/' . $defaultImage,
+    ];
+
+    foreach ($localPaths as $localPath) {
+        $localFullPath = __DIR__ . '/../' . ltrim($localPath, '/');
+        if (file_exists($localFullPath)) {
+            return $localPath;
+        }
+    }
+
+    if ($imageName === '' || !file_exists($candidatePath)) {
+        return 'images/medicines/default-placeholder.svg';
+    }
+
+    if (strpos($relativeCandidate, 'uploads/') === 0) {
+        return $relativeCandidate;
+    }
+
+    return 'images/medicines/' . basename($relativeCandidate);
+}
+
 function is_admin_logged_in(): bool {
     return isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id']);
 }

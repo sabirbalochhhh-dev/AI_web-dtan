@@ -60,7 +60,7 @@ $categories = $stmt->fetchAll();
         <?php foreach ($medicines as $medicine): ?>
             <div class="col-md-6 col-lg-4">
                 <div class="card h-100 shadow-sm border-0 card-hover">
-                    <img src="uploads/medicines/<?php echo $medicine['image']; ?>" class="card-img-top img-cover" alt="<?php echo sanitize_input($medicine['name']); ?>">
+                    <img src="<?php echo get_medicine_image_path($medicine['image']); ?>" class="card-img-top img-cover" alt="<?php echo sanitize_input($medicine['name']); ?>" loading="lazy">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <h5 class="card-title mb-0"><?php echo sanitize_input($medicine['name']); ?></h5>
